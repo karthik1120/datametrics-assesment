@@ -9,11 +9,11 @@ const reduxConfig = createSlice({
     apiProviderResponse: (state, action) => {
       state.apiProviderResponse = action.payload
     },
-    anotherData: (state, action) => {
-      state.anotherData = action.payload
+    providerObj: (state, action) => {
+      state.providerObj = action.payload
     },
   },
 })
 
-export const { apiProviderResponse, anotherData } = reduxConfig.actions
+export const { apiProviderResponse, providerObj } = reduxConfig.actions
 export default reduxConfig.reducer
