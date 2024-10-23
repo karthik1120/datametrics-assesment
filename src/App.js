@@ -7,13 +7,7 @@ import './App.css'
 import { apiProviderResponse } from './reduxConfig'
 import InformationPage from './modules/InformationPage'
 
-const StyleWrapper = styled.div`
-  /* margin-top: 60px;
-  padding: 60px 20px;
-  @media screen and (max-width: 480px) {
-    padding: 20px 0px;
-  } */
-`
+const StyleWrapper = styled.div``
 
 const App = () => {
   const dispatch = useDispatch()
@@ -34,17 +28,11 @@ const App = () => {
     if (!apiProvider.length) fetchApi()
   }, [])
 
-  console.log('apiProvider', apiProvider)
   return (
     <BrowserRouter>
       <StyleWrapper>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/add" element={<AddUser />} /> */}
-          {/* {users?.length > 0 && (
-            <Route path="/edit/:id" element={<EditUser />} />
-          )} */}
-
           <Route path="/info/:id" element={<InformationPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

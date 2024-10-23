@@ -15,9 +15,10 @@ const StyledButton = styled.button`
   color: white;
   border-radius: 5px;
   font-size: 18px;
+  cursor: pointer;
 `
 const Home = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   return (
     <Fragment>
       <CenterButtonWrapper>

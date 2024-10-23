@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { apiProviderResponse, providerObj } from '../reduxConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import AccordionComponent from './AccordionComponent'
-import Accordion from '@mui/material/Accordion'
 
 const DrawerStyles = styled.div`
   position: fixed;
@@ -11,7 +10,7 @@ const DrawerStyles = styled.div`
   right: -280px;
   width: 28rem;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: white;
   box-shadow: 2px 2px 50px #b8b8b8;
   overflow: scroll;
   transform: translate3d(280px, 0px, 0px);
@@ -37,8 +36,16 @@ const DrawerHeader = styled.div`
 
 const ProviderWrapper = styled.div`
   display: grid;
-  gap: 10px;
-  padding: 0 30px;
+  padding: 0 20px;
+  > div {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    &:before {
+      background-color: white !important;
+    }
+  }
 `
 
 const Drawer = ({ open }) => {
@@ -46,8 +53,6 @@ const Drawer = ({ open }) => {
   const apiProvider = useSelector(
     store => store.apiProvidersInfo.apiProviderResponse
   )
-
-  const res = useSelector(store => store.apiProvidersInfo)
 
   const handleProviderAPI = async (api, expanded) => {
     const url = `https://api.apis.guru/v2/${api}.json`
@@ -71,10 +76,6 @@ const Drawer = ({ open }) => {
         {apiProvider &&
           Object.keys(apiProvider)?.map((provider, ind) => {
             return (
-              // <div onClick={() => handleProviderAPI(provider)}>
-              //   {provider}
-              // </div>
-
               <AccordionComponent
                 key={ind}
                 title={provider}
