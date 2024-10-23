@@ -5,6 +5,7 @@ import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
 import Home from './modules/Home'
 import './App.css'
 import { apiProviderResponse } from './reduxConfig'
+import InformationPage from './modules/InformationPage'
 
 const StyleWrapper = styled.div`
   /* margin-top: 60px;
@@ -25,7 +26,9 @@ const App = () => {
     const fetchApi = async () => {
       const response = await fetch(url)
       const { data } = await response.json()
-      dispatch(apiProviderResponse(data))
+      dispatch(
+        apiProviderResponse(Object.fromEntries(data.map(key => [key, {}])))
+      )
     }
 
     if (!apiProvider.length) fetchApi()
@@ -41,6 +44,8 @@ const App = () => {
           {/* {users?.length > 0 && (
             <Route path="/edit/:id" element={<EditUser />} />
           )} */}
+
+          <Route path="/info/:id" element={<InformationPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </StyleWrapper>

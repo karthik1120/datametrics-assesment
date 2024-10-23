@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { apiProviderResponse, providerObj } from '../reduxConfig'
 import { useDispatch, useSelector } from 'react-redux'
+import AccordionComponent from './AccordionComponent'
+import Accordion from '@mui/material/Accordion'
 
 const DrawerStyles = styled.div`
   position: fixed;
@@ -47,41 +49,39 @@ const Drawer = ({ open }) => {
 
   const res = useSelector(store => store.apiProvidersInfo)
 
-  const handleProviderAPI = async api => {
+  const handleProviderAPI = async (api, expanded) => {
     const url = `https://api.apis.guru/v2/${api}.json`
 
-    if (!apiProvider[api]) {
+    if (!Object.keys(apiProvider[api]).length && expanded) {
       const response = await fetch(url)
       const { apis } = await response.json()
 
-      const updatedProvider = [
-        ...apiProvider.filter(i => i !== api),
-        { [api]: apis },
-      ]
-
-      // const updatedProvider = apiProvider.reduce(
-      //   (prv, curr) => (curr === api ? { [api]: apis } : [...prv]),
-      //   []
-      // )
+      let updatedProvider = JSON.parse(JSON.stringify(apiProvider))
+      updatedProvider[api] = apis
 
       dispatch(apiProviderResponse(updatedProvider))
       dispatch(providerObj(apis))
     }
   }
 
-  console.log('res', res)
-
   return (
     <DrawerStyles open={open}>
       <DrawerHeader>Select Provider</DrawerHeader>
       <ProviderWrapper>
-        {apiProvider?.map((provider, ind) => {
-          return (
-            <div key={ind} onClick={() => handleProviderAPI(provider)}>
-              {typeof provider === 'string' ? provider : Object.keys(provider)}
-            </div>
-          )
-        })}
+        {apiProvider &&
+          Object.keys(apiProvider)?.map((provider, ind) => {
+            return (
+              // <div onClick={() => handleProviderAPI(provider)}>
+              //   {provider}
+              // </div>
+
+              <AccordionComponent
+                key={ind}
+                title={provider}
+                handleProviderAPI={handleProviderAPI}
+              />
+            )
+          })}
       </ProviderWrapper>
     </DrawerStyles>
   )
